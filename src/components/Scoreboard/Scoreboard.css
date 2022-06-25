@@ -1,0 +1,22 @@
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.home,
+.away {
+  margin: 2rem 4rem;
+  text-align: center;
+}
+
+.home p,
+.away p {
+  margin-top: 1rem;
+}

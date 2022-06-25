@@ -1,0 +1,32 @@
+.buttons {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.game-info {
+  margin: 1rem;
+}
+
+.buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-start {
+  margin-right: 2rem;
+}
+
+.btn-start,
+.btn-goal,
+.btn-finish {
+  padding: 1rem 2rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.btn-goal {
+  display: none;
+}
