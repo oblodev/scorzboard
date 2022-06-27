@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import "./Buttons.css";
-import { useTheme } from "../../hooks/useTheme";
 
 import { BiFootball } from "react-icons/bi";
 
@@ -12,19 +11,19 @@ function Buttons({
   setScores,
   game,
   setSummaryGame,
+
+  setGamesFinished,
+  maxMatches,
 }) {
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [btnClickFinishDisabled, setBtnClickFinishDisabled] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const { mode, changeMode } = useTheme();
 
   const handleClick = () => {
     if (buttonClicked) {
       return;
     }
     setStartGame(true);
-
-    changeMode("Finish");
     setBtnDisabled(true);
     setMatch(match + 1);
   };
@@ -33,14 +32,14 @@ function Buttons({
     if (buttonClicked) {
       return;
     }
-    setStartGame(false);
 
-    changeMode("Start");
     setBtnDisabled(false);
     setMatch(match);
     setScores(false);
     setBtnClickFinishDisabled(false);
     setSummaryGame((summaryGame) => [...summaryGame, game]);
+
+    setStartGame(false);
   };
 
   const handleScores = () => {
@@ -53,15 +52,19 @@ function Buttons({
     setBtnClickFinishDisabled(true);
   };
 
+  const handleLastGame = () => {
+    setGamesFinished(false);
+  };
+
   return (
     <div className="buttons">
       <div className="game-info"></div>
       <div className="buttons-wrapper">
         <button
           className={btnDisabled ? "btn-start disabled" : "btn-start"}
-          onClick={handleClick}
+          onClick={match >= maxMatches ? handleLastGame : handleClick}
         >
-          Start Game
+          Start Match
         </button>{" "}
         <button
           className={!btnDisabled ? "btn-goal disabled" : "btn-goal"}
@@ -73,9 +76,9 @@ function Buttons({
           className={
             !btnClickFinishDisabled ? "btn-finish disabled" : "btn-finish"
           }
-          onClick={handleClickFinish}
+          onClick={match > maxMatches ? handleLastGame : handleClickFinish}
         >
-          Finish Game
+          Finish Match
         </button>
       </div>
     </div>

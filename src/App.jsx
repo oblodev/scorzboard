@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Scoreboard from "./components/Scoreboard/Scoreboard";
 import Buttons from "./components/Buttons/Buttons";
 import Summary from "./components/Summary/Summary";
+import Finished from "./components/Finished/Finished";
 
 const matches = [
   {
@@ -40,7 +41,7 @@ const matches = [
     startingScore: 0,
   },
   {
-    id: 4,
+    id: 5,
     home: "Uruguay",
     away: "Italy",
     homeScore: 6,
@@ -48,7 +49,7 @@ const matches = [
     startingScore: 0,
   },
   {
-    id: 5,
+    id: 6,
     home: "Argentina",
     away: "Australia",
     homeScore: 3,
@@ -60,33 +61,47 @@ const matches = [
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [finishGame, setFinishGame] = useState(false);
+  const [summaryGame, setSummaryGame] = useState([]);
+  const [gamesFinished, setGamesFinished] = useState(true);
   const [match, setMatch] = useState(0);
   const [scores, setScores] = useState(false);
+  const [maxMatches, setMAxMatches] = useState(matches.length);
 
   const game = matches.find((game) => game.id === match);
-
-  const [summaryGame, setSummaryGame] = useState([]);
+  console.log(match);
+  console.log(maxMatches);
 
   return (
     <div className="App">
       <Header />
-      <Scoreboard
-        startGame={startGame}
-        finishGame={finishGame}
-        match={match}
-        scores={scores}
-        game={game}
-      />
-      <Buttons
-        setStartGame={setStartGame}
-        setFinishGame={setFinishGame}
-        setScores={setScores}
-        setMatch={setMatch}
-        match={match}
-        game={game}
-        setSummaryGame={setSummaryGame}
-      />
-      <Summary summaryGame={summaryGame} match={match} />
+      {gamesFinished ? (
+        <>
+          <Scoreboard
+            startGame={startGame}
+            finishGame={finishGame}
+            match={match}
+            scores={scores}
+            game={game}
+          />
+          <Buttons
+            setStartGame={setStartGame}
+            setFinishGame={setFinishGame}
+            setScores={setScores}
+            setMatch={setMatch}
+            match={match}
+            game={game}
+            setSummaryGame={setSummaryGame}
+            maxMatches={maxMatches}
+            setGamesFinished={setGamesFinished}
+          />
+          <Summary summaryGame={summaryGame} />
+        </>
+      ) : (
+        <>
+          <Finished />
+          <Summary summaryGame={summaryGame} />
+        </>
+      )}
     </div>
   );
 }

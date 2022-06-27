@@ -1,16 +1,16 @@
 import React from "react";
-import { useTheme } from "../../hooks/useTheme";
+
 import Scores from "./Scores/Scores.jsx";
 
 import "./Scoreboard.css";
 
-function Scoreboard({ startGame, match, scores, game }) {
+function Scoreboard({ startGame, scores, game }) {
   return (
     <div className="scoreboard">
-      {startGame && match ? (
+      {startGame ? (
         <Scores game={game} scores={scores} />
       ) : (
-        <div style={{ padding: "20px", fontSize: "20px" }}>
+        <div style={{ padding: "20px", fontSize: "24px", fontWeight: 700 }}>
           Start a new Match
         </div>
       )}
