@@ -5,17 +5,25 @@ import { useTheme } from "../../hooks/useTheme";
 
 import { BiFootball } from "react-icons/bi";
 
-function Buttons({ setStartGame, setMatch, match, setScores }) {
+function Buttons({
+  setStartGame,
+  setMatch,
+  match,
+  setScores,
+  game,
+  setSummaryGame,
+}) {
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [btnClickFinishDisabled, setBtnClickFinishDisabled] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const { mode, changeMode, game, gameMode } = useTheme();
+  const { mode, changeMode } = useTheme();
 
   const handleClick = () => {
     if (buttonClicked) {
       return;
     }
     setStartGame(true);
-    gameMode(true);
+
     changeMode("Finish");
     setBtnDisabled(true);
     setMatch(match + 1);
@@ -26,11 +34,13 @@ function Buttons({ setStartGame, setMatch, match, setScores }) {
       return;
     }
     setStartGame(false);
-    gameMode(false);
+
     changeMode("Start");
     setBtnDisabled(false);
     setMatch(match);
     setScores(false);
+    setBtnClickFinishDisabled(false);
+    setSummaryGame((summaryGame) => [...summaryGame, game]);
   };
 
   const handleScores = () => {
@@ -39,10 +49,9 @@ function Buttons({ setStartGame, setMatch, match, setScores }) {
     }
 
     setScores(true);
+    setBtnDisabled(true);
+    setBtnClickFinishDisabled(true);
   };
-
-  console.log(game);
-  console.log(match);
 
   return (
     <div className="buttons">
@@ -54,10 +63,18 @@ function Buttons({ setStartGame, setMatch, match, setScores }) {
         >
           Start Game
         </button>{" "}
-        <button className="btn-goal" onClick={handleScores}>
+        <button
+          className={!btnDisabled ? "btn-goal disabled" : "btn-goal"}
+          onClick={handleScores}
+        >
           Score Goals <BiFootball className="football" />
         </button>{" "}
-        <button className="btn-finish" onClick={handleClickFinish}>
+        <button
+          className={
+            !btnClickFinishDisabled ? "btn-finish disabled" : "btn-finish"
+          }
+          onClick={handleClickFinish}
+        >
           Finish Game
         </button>
       </div>
